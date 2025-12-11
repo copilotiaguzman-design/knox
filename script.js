@@ -230,7 +230,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /**
- * Verifica en Google Sheets si ya hay un registro
+ * Verifica en Google Sheets si ya hay un registro usando JSONP
  */
 function checkGoogleSheets() {
     // Mostrar estado de carga
@@ -238,34 +238,39 @@ function checkGoogleSheets() {
     const originalText = accessMessage.textContent;
     accessMessage.textContent = 'Verificando acceso...';
     
-    fetch(GOOGLE_SCRIPT_URL)
-        .then(response => response.json())
-        .then(data => {
-            if (data.registered) {
-                // Ya existe registro en Google Sheets, guardar localmente y entrar
-                localStorage.setItem(STORAGE_KEY, JSON.stringify({
-                    registered: true,
-                    fromCloud: true
-                }));
-                showMainScreen();
-            } else {
-                // No hay registro, mostrar pantalla de acceso
-                accessMessage.textContent = originalText;
-                accessScreen.classList.remove('hidden');
-                setTimeout(() => {
-                    birthdateInput.focus();
-                }, 500);
-            }
-        })
-        .catch(error => {
-            console.log('⚠️ Error al verificar:', error);
-            // En caso de error, mostrar pantalla de acceso
+    // Crear función callback global
+    window.handleSheetResponse = function(data) {
+        if (data.registered) {
+            // Ya existe registro en Google Sheets, guardar localmente y entrar
+            localStorage.setItem(STORAGE_KEY, JSON.stringify({
+                registered: true,
+                fromCloud: true
+            }));
+            showMainScreen();
+        } else {
+            // No hay registro, mostrar pantalla de acceso
             accessMessage.textContent = originalText;
             accessScreen.classList.remove('hidden');
             setTimeout(() => {
                 birthdateInput.focus();
             }, 500);
-        });
+        }
+        // Limpiar
+        delete window.handleSheetResponse;
+    };
+    
+    // Crear script JSONP
+    const script = document.createElement('script');
+    script.src = GOOGLE_SCRIPT_URL + '?callback=handleSheetResponse&t=' + Date.now();
+    script.onerror = function() {
+        console.log('⚠️ Error al verificar');
+        accessMessage.textContent = originalText;
+        accessScreen.classList.remove('hidden');
+        setTimeout(() => {
+            birthdateInput.focus();
+        }, 500);
+    };
+    document.body.appendChild(script);
 }
 
 // ========================================
