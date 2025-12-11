@@ -10,9 +10,6 @@ const birthdateInput = document.getElementById('birthdate-input');
 const accessBtn = document.getElementById('access-btn');
 const continueBtn = document.getElementById('continue-btn');
 
-// Clave para localStorage
-const STORAGE_KEY = 'knox_user_data';
-
 // URL de Google Apps Script
 const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw2ntFSK98e6hAeGwAoT3qzc8_TOaWlBGjXwhfaWDTUt9wIiRdkxgxXlKyBuje2NxDm7g/exec';
 
@@ -21,44 +18,10 @@ const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw2ntFSK98e6h
 // ========================================
 
 /**
- * Verifica si el usuario ya ingresó sus datos
- */
-function checkExistingUser() {
-    const userData = localStorage.getItem(STORAGE_KEY);
-    
-    if (userData) {
-        const data = JSON.parse(userData);
-        if (data.registered === true) {
-            // Usuario ya registrado, ir directo al contenido
-            showMainScreen();
-            return true;
-        }
-    }
-    return false;
-}
-
-/**
- * Guarda los datos del usuario localmente y en Google Sheets
+ * Guarda los datos en Google Sheets
  */
 function saveUserData(birthdate) {
-    const userData = {
-        birthdate: birthdate,
-        registered: true,
-        timestamp: new Date().toISOString()
-    };
-    
-    // Guardar localmente
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(userData));
-    console.log('📅 Datos guardados localmente:', userData);
-    
     // Enviar a Google Sheets
-    sendToGoogleSheets(birthdate);
-}
-
-/**
- * Envía la fecha de nacimiento a Google Sheets
- */
-function sendToGoogleSheets(birthdate) {
     fetch(GOOGLE_SCRIPT_URL, {
         method: 'POST',
         mode: 'no-cors',
@@ -239,8 +202,7 @@ function checkGoogleSheets() {
             // Ya existe registro en Google Sheets, entrar directo
             showMainScreen();
         } else {
-            // No hay registro, limpiar localStorage y mostrar pantalla de acceso
-            localStorage.removeItem(STORAGE_KEY);
+            // No hay registro, mostrar pantalla de acceso
             accessMessage.textContent = originalText;
             accessScreen.classList.remove('hidden');
             setTimeout(() => {
@@ -255,11 +217,8 @@ function checkGoogleSheets() {
     const script = document.createElement('script');
     script.src = GOOGLE_SCRIPT_URL + '?callback=handleSheetResponse&t=' + Date.now();
     script.onerror = function() {
-        console.log('⚠️ Error al verificar, usando localStorage');
-        // En caso de error de red, usar localStorage como fallback
-        if (checkExistingUser()) {
-            return;
-        }
+        console.log('⚠️ Error al verificar');
+        // En caso de error de red, mostrar pantalla de acceso
         accessMessage.textContent = originalText;
         accessScreen.classList.remove('hidden');
         setTimeout(() => {
