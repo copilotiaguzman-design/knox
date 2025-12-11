@@ -13,6 +13,9 @@ const continueBtn = document.getElementById('continue-btn');
 // Clave para localStorage
 const STORAGE_KEY = 'knox_user_data';
 
+// URL de Google Apps Script
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw2ntFSK98e6hAeGwAoT3qzc8_TOaWlBGjXwhfaWDTUt9wIiRdkxgxXlKyBuje2NxDm7g/exec';
+
 // ========================================
 // FUNCIONES PRINCIPALES
 // ========================================
@@ -35,7 +38,7 @@ function checkExistingUser() {
 }
 
 /**
- * Guarda los datos del usuario
+ * Guarda los datos del usuario localmente y en Google Sheets
  */
 function saveUserData(birthdate) {
     const userData = {
@@ -44,8 +47,32 @@ function saveUserData(birthdate) {
         timestamp: new Date().toISOString()
     };
     
+    // Guardar localmente
     localStorage.setItem(STORAGE_KEY, JSON.stringify(userData));
-    console.log('📅 Datos guardados:', userData);
+    console.log('📅 Datos guardados localmente:', userData);
+    
+    // Enviar a Google Sheets
+    sendToGoogleSheets(birthdate);
+}
+
+/**
+ * Envía la fecha de nacimiento a Google Sheets
+ */
+function sendToGoogleSheets(birthdate) {
+    fetch(GOOGLE_SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ birthdate: birthdate })
+    })
+    .then(() => {
+        console.log('✅ Datos enviados a Google Sheets');
+    })
+    .catch(error => {
+        console.log('⚠️ Error al enviar a Google Sheets:', error);
+    });
 }
 
 /**
