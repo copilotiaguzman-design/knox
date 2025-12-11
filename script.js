@@ -220,17 +220,53 @@ continueBtn.addEventListener('click', showMainScreen);
 // ========================================
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Verificar si el usuario ya está registrado
-    if (!checkExistingUser()) {
-        // Mostrar pantalla de acceso
-        accessScreen.classList.remove('hidden');
-        
-        // Focus en el input
-        setTimeout(() => {
-            birthdateInput.focus();
-        }, 500);
+    // Primero verificar en localStorage (más rápido)
+    if (checkExistingUser()) {
+        return; // Ya está registrada localmente
     }
+    
+    // Si no hay datos locales, verificar en Google Sheets
+    checkGoogleSheets();
 });
+
+/**
+ * Verifica en Google Sheets si ya hay un registro
+ */
+function checkGoogleSheets() {
+    // Mostrar estado de carga
+    const accessMessage = document.querySelector('.access-message p');
+    const originalText = accessMessage.textContent;
+    accessMessage.textContent = 'Verificando acceso...';
+    
+    fetch(GOOGLE_SCRIPT_URL)
+        .then(response => response.json())
+        .then(data => {
+            if (data.registered) {
+                // Ya existe registro en Google Sheets, guardar localmente y entrar
+                localStorage.setItem(STORAGE_KEY, JSON.stringify({
+                    registered: true,
+                    fromCloud: true
+                }));
+                showMainScreen();
+            } else {
+                // No hay registro, mostrar pantalla de acceso
+                accessMessage.textContent = originalText;
+                accessScreen.classList.remove('hidden');
+                setTimeout(() => {
+                    birthdateInput.focus();
+                }, 500);
+            }
+        })
+        .catch(error => {
+            console.log('⚠️ Error al verificar:', error);
+            // En caso de error, mostrar pantalla de acceso
+            accessMessage.textContent = originalText;
+            accessScreen.classList.remove('hidden');
+            setTimeout(() => {
+                birthdateInput.focus();
+            }, 500);
+        });
+}
 
 // ========================================
 // EXTRAS - Efectos visuales
