@@ -1,0 +1,499 @@
+/* ========================================
+   KNOX - Escarabajos con Alma
+   Tema: Negro con Plateado - Minimalista
+======================================== */
+
+:root {
+    --black: #0a0a0a;
+    --black-light: #141414;
+    --black-lighter: #1a1a1a;
+    --silver: #c0c0c0;
+    --silver-light: #e8e8e8;
+    --silver-dark: #8a8a8a;
+    --white: #ffffff;
+    
+    /* Colores de los escarabajos */
+    --morado: #9b59b6;
+    --rojo: #e74c3c;
+    --azul: #3498db;
+    --rosa: #ff6b9d;
+    --dorado: #f1c40f;
+    --tornasol: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460, #1a1a2e);
+    
+    --font-elegant: 'Cormorant Garamond', Georgia, serif;
+    --font-modern: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    
+    --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-modern);
+    background-color: var(--black);
+    color: var(--silver);
+    min-height: 100vh;
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* ========================================
+   SCREENS
+======================================== */
+
+.screen {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* ========================================
+   ACCESS SCREEN
+======================================== */
+
+.access-container {
+    text-align: center;
+    max-width: 400px;
+    animation: fadeIn 1s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.beetle-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    filter: grayscale(100%);
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.spinning {
+    animation: spin 2s linear infinite, float 3s ease-in-out infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.access-title {
+    font-family: var(--font-elegant);
+    font-size: 3.5rem;
+    font-weight: 300;
+    color: var(--silver-light);
+    letter-spacing: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.access-subtitle {
+    font-size: 0.875rem;
+    color: var(--silver-dark);
+    text-transform: uppercase;
+    letter-spacing: 0.3rem;
+    margin-bottom: 3rem;
+}
+
+.access-message {
+    margin-bottom: 2rem;
+}
+
+.access-message p {
+    color: var(--silver);
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.format-hint {
+    font-size: 0.75rem;
+    color: var(--silver-dark);
+}
+
+.input-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+#birthdate-input {
+    background: var(--black-lighter);
+    border: 1px solid var(--silver-dark);
+    border-radius: 8px;
+    padding: 1rem 1.5rem;
+    font-size: 1.25rem;
+    color: var(--silver-light);
+    text-align: center;
+    font-family: var(--font-modern);
+    transition: var(--transition);
+    letter-spacing: 0.2rem;
+}
+
+#birthdate-input::placeholder {
+    color: var(--silver-dark);
+    opacity: 0.5;
+}
+
+#birthdate-input:focus {
+    outline: none;
+    border-color: var(--silver);
+    box-shadow: 0 0 20px rgba(192, 192, 192, 0.1);
+}
+
+#access-btn, #continue-btn {
+    background: transparent;
+    border: 1px solid var(--silver);
+    color: var(--silver);
+    padding: 1rem 2rem;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2rem;
+    cursor: pointer;
+    transition: var(--transition);
+    border-radius: 4px;
+    font-family: var(--font-modern);
+}
+
+#access-btn:hover, #continue-btn:hover {
+    background: var(--silver);
+    color: var(--black);
+}
+
+.security-note {
+    font-size: 0.75rem;
+    color: var(--silver-dark);
+    opacity: 0.7;
+}
+
+/* ========================================
+   JOKE SCREEN
+======================================== */
+
+.joke-container {
+    text-align: center;
+    max-width: 500px;
+    animation: fadeIn 0.8s ease-out;
+}
+
+.joke-title {
+    font-family: var(--font-elegant);
+    font-size: 2.5rem;
+    color: var(--silver-light);
+    margin-bottom: 2rem;
+    font-weight: 300;
+}
+
+.joke-message {
+    font-size: 1.125rem;
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+    color: var(--silver);
+}
+
+.highlight {
+    color: var(--silver-light);
+    font-style: italic;
+}
+
+.joke-submessage {
+    font-size: 0.875rem;
+    color: var(--silver-dark);
+    margin-bottom: 3rem;
+}
+
+/* ========================================
+   MAIN SCREEN
+======================================== */
+
+#main-screen {
+    flex-direction: column;
+    padding: 0;
+}
+
+.main-header {
+    text-align: center;
+    padding: 4rem 2rem 3rem;
+    background: linear-gradient(180deg, var(--black-light) 0%, var(--black) 100%);
+    width: 100%;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.beetle-small {
+    font-size: 1.5rem;
+    filter: grayscale(100%);
+}
+
+.logo-text {
+    font-family: var(--font-elegant);
+    font-size: 2.5rem;
+    font-weight: 300;
+    color: var(--silver-light);
+    letter-spacing: 0.4rem;
+}
+
+.tagline {
+    font-size: 0.875rem;
+    color: var(--silver-dark);
+    font-style: italic;
+}
+
+/* ========================================
+   BEETLES CONTAINER
+======================================== */
+
+.beetles-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+    padding: 3rem 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* ========================================
+   BEETLE CARDS
+======================================== */
+
+.beetle-card {
+    background: var(--black-lighter);
+    border: 1px solid rgba(192, 192, 192, 0.1);
+    border-radius: 16px;
+    padding: 2.5rem 2rem;
+    position: relative;
+    overflow: hidden;
+    transition: var(--transition);
+}
+
+.beetle-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(192, 192, 192, 0.3);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.beetle-card.principal {
+    grid-column: 1 / -1;
+    max-width: 700px;
+    margin: 0 auto 1rem;
+    background: linear-gradient(135deg, var(--black-lighter) 0%, var(--black-light) 100%);
+    border-color: rgba(192, 192, 192, 0.2);
+}
+
+.card-glow {
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(192, 192, 192, 0.03) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+.beetle-card .beetle-emoji {
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
+    display: block;
+}
+
+.color-indicator {
+    width: 40px;
+    height: 4px;
+    border-radius: 2px;
+    margin-bottom: 1.5rem;
+}
+
+.color-indicator.morado { background: var(--morado); }
+.color-indicator.rojo { background: var(--rojo); }
+.color-indicator.azul { background: var(--azul); }
+.color-indicator.rosa { background: var(--rosa); }
+.color-indicator.dorado { background: var(--dorado); }
+.color-indicator.tornasol { 
+    background: var(--tornasol);
+    width: 60px;
+    height: 6px;
+    box-shadow: 0 0 20px rgba(192, 192, 192, 0.2);
+}
+
+.color-name {
+    font-family: var(--font-elegant);
+    font-size: 1.75rem;
+    font-weight: 400;
+    color: var(--silver-light);
+    margin-bottom: 0.5rem;
+}
+
+.color-meaning {
+    font-size: 0.75rem;
+    color: var(--silver-dark);
+    text-transform: uppercase;
+    letter-spacing: 0.15rem;
+    margin-bottom: 1.5rem;
+}
+
+.color-phrase {
+    font-family: var(--font-elegant);
+    font-size: 1.125rem;
+    font-style: italic;
+    color: var(--silver);
+    line-height: 1.8;
+    border-left: 2px solid rgba(192, 192, 192, 0.2);
+    padding-left: 1.5rem;
+    margin: 0;
+}
+
+.badge {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    font-size: 0.625rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15rem;
+    color: var(--silver-dark);
+    background: rgba(192, 192, 192, 0.1);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+}
+
+/* Card hover effects por color */
+.beetle-card[data-color="morado"]:hover { border-color: var(--morado); }
+.beetle-card[data-color="rojo"]:hover { border-color: var(--rojo); }
+.beetle-card[data-color="azul"]:hover { border-color: var(--azul); }
+.beetle-card[data-color="rosa"]:hover { border-color: var(--rosa); }
+.beetle-card[data-color="dorado"]:hover { border-color: var(--dorado); }
+.beetle-card[data-color="tornasol"]:hover { 
+    border-color: var(--silver);
+    box-shadow: 0 20px 60px rgba(192, 192, 192, 0.1);
+}
+
+/* ========================================
+   FOOTER
+======================================== */
+
+.main-footer {
+    text-align: center;
+    padding: 3rem 2rem;
+    border-top: 1px solid rgba(192, 192, 192, 0.1);
+    width: 100%;
+}
+
+.main-footer p {
+    font-size: 0.75rem;
+    color: var(--silver-dark);
+    letter-spacing: 0.1rem;
+}
+
+/* ========================================
+   RESPONSIVE
+======================================== */
+
+@media (max-width: 768px) {
+    .access-title {
+        font-size: 2.5rem;
+        letter-spacing: 0.3rem;
+    }
+    
+    .beetles-container {
+        grid-template-columns: 1fr;
+        padding: 2rem 1rem;
+    }
+    
+    .beetle-card.principal {
+        grid-column: 1;
+    }
+    
+    .color-phrase {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .access-title {
+        font-size: 2rem;
+    }
+    
+    .beetle-card {
+        padding: 2rem 1.5rem;
+    }
+    
+    .color-name {
+        font-size: 1.5rem;
+    }
+}
+
+/* ========================================
+   ANIMATIONS
+======================================== */
+
+.beetle-card {
+    animation: slideUp 0.6s ease-out;
+    animation-fill-mode: both;
+}
+
+.beetle-card:nth-child(1) { animation-delay: 0.1s; }
+.beetle-card:nth-child(2) { animation-delay: 0.2s; }
+.beetle-card:nth-child(3) { animation-delay: 0.3s; }
+.beetle-card:nth-child(4) { animation-delay: 0.4s; }
+.beetle-card:nth-child(5) { animation-delay: 0.5s; }
+.beetle-card:nth-child(6) { animation-delay: 0.6s; }
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Scrollbar personalizado */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--black);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--silver-dark);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--silver);
+}

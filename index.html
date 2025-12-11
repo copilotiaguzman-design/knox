@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Knox — Escarabajos con Alma</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Pantalla de acceso -->
+    <div id="access-screen" class="screen">
+        <div class="access-container">
+            <div class="beetle-icon">🪲</div>
+            <h1 class="access-title">Knox</h1>
+            <p class="access-subtitle">Acceso restringido</p>
+            <div class="access-message">
+                <p>Para continuar, ingresa tu fecha de nacimiento</p>
+                <span class="format-hint">Formato: DD/MM/AAAA</span>
+            </div>
+            <div class="input-container">
+                <input type="text" id="birthdate-input" placeholder="19/01/2001" maxlength="10">
+                <button id="access-btn">Acceder</button>
+            </div>
+            <p class="security-note">🔒 Este dato es necesario para verificar tu acceso</p>
+        </div>
+    </div>
+
+    <!-- Pantalla del mensaje gracioso -->
+    <div id="joke-screen" class="screen hidden">
+        <div class="joke-container">
+            <div class="beetle-icon spinning">🪲</div>
+            <h2 class="joke-title">Oops...</h2>
+            <p class="joke-message">
+                Realmente no era necesaria tu fecha de nacimiento.<br>
+                <span class="highlight">Solo quería saber cuándo es tu cumpleaños.</span>
+            </p>
+            <p class="joke-submessage">Gracias por confiar. 🖤</p>
+            <button id="continue-btn">Continuar</button>
+        </div>
+    </div>
+
+    <!-- Pantalla principal con los escarabajos -->
+    <div id="main-screen" class="screen hidden">
+        <header class="main-header">
+            <div class="logo">
+                <span class="beetle-small">🪲</span>
+                <span class="logo-text">Knox</span>
+            </div>
+            <p class="tagline">Cada color cuenta una historia</p>
+        </header>
+
+        <main class="beetles-container">
+            <!-- Negro Tornasol - Principal -->
+            <article class="beetle-card principal" data-color="tornasol">
+                <div class="card-glow"></div>
+                <div class="beetle-emoji">🪲</div>
+                <div class="color-indicator tornasol"></div>
+                <h2 class="color-name">Negro Tornasol</h2>
+                <p class="color-meaning">Origen · Presencia · Dirección · Liderazgo Natural</p>
+                <blockquote class="color-phrase">
+                    "No destaca por lo que muestra, sino por lo que sostiene. Algunos comienzos nacen así: silenciosos, pero decisivos."
+                </blockquote>
+                <span class="badge">Principal</span>
+            </article>
+
+            <!-- Morado -->
+            <article class="beetle-card" data-color="morado">
+                <div class="beetle-emoji">🪲</div>
+                <div class="color-indicator morado"></div>
+                <h2 class="color-name">Morado</h2>
+                <p class="color-meaning">Intuición · Percepción · Sensibilidad Profunda</p>
+                <blockquote class="color-phrase">
+                    "A veces ver más claro no es entender, sino notar lo que otros pasan por alto."
+                </blockquote>
+            </article>
+
+            <!-- Rojo -->
+            <article class="beetle-card" data-color="rojo">
+                <div class="beetle-emoji">🪲</div>
+                <div class="color-indicator rojo"></div>
+                <h2 class="color-name">Rojo</h2>
+                <p class="color-meaning">Energía · Impulso Interno · Decisión</p>
+                <blockquote class="color-phrase">
+                    "Hay momentos que no empujan: despiertan. Y ese despertar basta para cambiar tu rumbo."
+                </blockquote>
+            </article>
+
+            <!-- Azul -->
+            <article class="beetle-card" data-color="azul">
+                <div class="beetle-emoji">🪲</div>
+                <div class="color-indicator azul"></div>
+                <h2 class="color-name">Azul</h2>
+                <p class="color-meaning">Calma · Equilibrio · Claridad Mental</p>
+                <blockquote class="color-phrase">
+                    "La calma no siempre llega cuando todo está bien, sino cuando algo simplemente encaja."
+                </blockquote>
+            </article>
+
+            <!-- Rosa -->
+            <article class="beetle-card" data-color="rosa">
+                <div class="beetle-emoji">🪲</div>
+                <div class="color-indicator rosa"></div>
+                <h2 class="color-name">Rosa</h2>
+                <p class="color-meaning">Lo Genuino · Lo Humano · Lo Honesto</p>
+                <blockquote class="color-phrase">
+                    "Lo auténtico se reconoce sin esfuerzo. No necesita explicación, solo presencia."
+                </blockquote>
+            </article>
+
+            <!-- Dorado -->
+            <article class="beetle-card" data-color="dorado">
+                <div class="beetle-emoji">🪲</div>
+                <div class="color-indicator dorado"></div>
+                <h2 class="color-name">Dorado</h2>
+                <p class="color-meaning">Coincidencia con Propósito · Valor · Momentos Clave</p>
+                <blockquote class="color-phrase">
+                    "Hay coincidencias que no parecen azar. No porque traigan respuestas, sino porque abren caminos."
+                </blockquote>
+            </article>
+        </main>
+
+        <footer class="main-footer">
+            <p>Knox © 2024 — Hecho con 🖤</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
