@@ -220,12 +220,7 @@ continueBtn.addEventListener('click', showMainScreen);
 // ========================================
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Primero verificar en localStorage (más rápido)
-    if (checkExistingUser()) {
-        return; // Ya está registrada localmente
-    }
-    
-    // Si no hay datos locales, verificar en Google Sheets
+    // SIEMPRE verificar en Google Sheets primero
     checkGoogleSheets();
 });
 
@@ -241,14 +236,11 @@ function checkGoogleSheets() {
     // Crear función callback global
     window.handleSheetResponse = function(data) {
         if (data.registered) {
-            // Ya existe registro en Google Sheets, guardar localmente y entrar
-            localStorage.setItem(STORAGE_KEY, JSON.stringify({
-                registered: true,
-                fromCloud: true
-            }));
+            // Ya existe registro en Google Sheets, entrar directo
             showMainScreen();
         } else {
-            // No hay registro, mostrar pantalla de acceso
+            // No hay registro, limpiar localStorage y mostrar pantalla de acceso
+            localStorage.removeItem(STORAGE_KEY);
             accessMessage.textContent = originalText;
             accessScreen.classList.remove('hidden');
             setTimeout(() => {
@@ -263,7 +255,11 @@ function checkGoogleSheets() {
     const script = document.createElement('script');
     script.src = GOOGLE_SCRIPT_URL + '?callback=handleSheetResponse&t=' + Date.now();
     script.onerror = function() {
-        console.log('⚠️ Error al verificar');
+        console.log('⚠️ Error al verificar, usando localStorage');
+        // En caso de error de red, usar localStorage como fallback
+        if (checkExistingUser()) {
+            return;
+        }
         accessMessage.textContent = originalText;
         accessScreen.classList.remove('hidden');
         setTimeout(() => {
